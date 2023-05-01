@@ -10,6 +10,11 @@ namespace UserApi.Services
 {
     public class TokenService : ITokenService
     {
+        private readonly IConfiguration _configuration;
+        public TokenService(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
@@ -18,7 +23,9 @@ namespace UserApi.Services
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
-            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("9123y2j3bn429342934h2i3jb4r29834"));
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration.GetConnectionString("SymmetricSecurityKey")
+            ));
 
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 

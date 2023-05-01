@@ -41,7 +41,9 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("9123y2j3bn429342934h2i3jb4r29834")),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration.GetConnectionString("SymmetricSecurityKey")
+        )),
         ValidateAudience = false,
         ValidateIssuer = false,
         ClockSkew = TimeSpan.Zero

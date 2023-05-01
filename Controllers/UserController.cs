@@ -16,12 +16,20 @@ namespace UserApi.Controllers
             _userService = userService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUser(CreateUserDto dto)
         {
             await _userService.CreateUserAsync(dto);
 
             return Ok("User created successfully");
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginUserDto dto)
+        {
+            await _userService.LoginAsync(dto);
+
+            return Ok("Login successful");
         }
     }
 }

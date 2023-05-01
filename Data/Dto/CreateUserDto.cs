@@ -9,7 +9,7 @@ namespace UserApi.Data.Dto
         public string? Username { get; set; }
         
         [Required]
-        public DateTime DataDeNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

@@ -1,4 +1,6 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserApi.Data.Dto;
 using UserApi.Services.Interfaces;
@@ -30,6 +32,13 @@ namespace UserApi.Controllers
             string token = await _userService.LoginAsync(dto);
 
             return Ok(token);
+        }
+
+        [HttpGet("validateToken")]
+        [Authorize (AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public IActionResult ValidateToken()
+        {
+            return Ok("Token is valid");
         }
     }
 }

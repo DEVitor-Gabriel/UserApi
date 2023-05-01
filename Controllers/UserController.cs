@@ -4,6 +4,8 @@ using UserApi.Data.Dto;
 
 namespace UserApi.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         [HttpPost]

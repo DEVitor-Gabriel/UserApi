@@ -1,6 +1,9 @@
 
+using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UserApi.Data.Dto;
+using UserApi.Models;
 
 namespace UserApi.Controllers
 {
@@ -8,10 +11,28 @@ namespace UserApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult CreateUser(CreateUserDto dto)
+        private readonly IMapper _mapper;
+        private UserManager<User> _userManager;
+
+        public UserController(IMapper mapper, UserManager<User> userManager)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _userManager = userManager;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(CreateUserDto dto)
+        {
+            User user = _mapper.Map<User>(dto);
+
+            IdentityResult result = await _userManager.CreateAsync(user, dto.Password);
+
+            if (result.Succeeded)
+            {
+                return Ok();
+            }
+
+            return BadRequest(result.Errors);
         }
     }
 }
